@@ -20,11 +20,11 @@ public class AccountController {
         this.accountDao = accountDao;
     }
 
-    @RequestMapping(path = "/balance/{accountId}", method = RequestMethod.GET)
-    public BigDecimal getBalance(@PathVariable long accountId){
+    @RequestMapping(path = "/balance/{userId}", method = RequestMethod.GET)
+    public BigDecimal getBalance(@PathVariable long userId){
         BigDecimal balance = null;
 
-        balance = accountDao.getBalance(accountId);
+        balance = accountDao.getBalance(userId);
         //I forget to set method to the balance
         //Now that it is correctly set, data is being pulled
 
