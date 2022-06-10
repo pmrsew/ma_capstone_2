@@ -1,11 +1,14 @@
 package com.techelevator.tenmo;
 
 import com.techelevator.tenmo.model.AuthenticatedUser;
+import com.techelevator.tenmo.model.User;
 import com.techelevator.tenmo.model.UserCredentials;
 import com.techelevator.tenmo.services.AccountService;
 import com.techelevator.tenmo.services.AuthenticationService;
 import com.techelevator.tenmo.services.ConsoleService;
 import io.cucumber.java.bs.A;
+
+import java.util.List;
 
 public class App {
 
@@ -120,6 +123,9 @@ public class App {
                 I can't send a zero or negative amount.
                 A Sending Transfer has an initial status of Approved.
         */
+        authenticationService.viewAll();
+
+
 
 		
 	}
