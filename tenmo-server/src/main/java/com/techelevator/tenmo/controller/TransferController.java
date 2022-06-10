@@ -33,11 +33,13 @@ public class TransferController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(value = "/send", method = RequestMethod.POST)
+    @RequestMapping(path = "/send", method = RequestMethod.POST)
     public void createSendTransfer(@Valid @RequestBody Transfer transfer) {
         if (!transferDao.create(transfer.getAccountFrom(), transfer.getAccountTo(), transfer.getAmount(), true)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Transfer creation failed");
         }
     }
+
+
 
 }

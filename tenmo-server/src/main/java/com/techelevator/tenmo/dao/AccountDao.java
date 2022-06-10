@@ -10,12 +10,6 @@ public interface AccountDao {
 
     Account getAccount(long userId);
 
-    long getAccountId(long userId);
-
-    List<Account> getAllAccounts();
-
-    BigDecimal getBalance(long userId);
-
-    boolean update(long userId, Account account);
+    boolean updateAccount(Account account, long userId);
 
 }
