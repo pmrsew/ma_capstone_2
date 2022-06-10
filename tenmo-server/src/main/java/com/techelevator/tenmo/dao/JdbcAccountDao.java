@@ -34,6 +34,19 @@ public class JdbcAccountDao implements AccountDao {
     }
 
     @Override
+    public List<Transfer> getTransferHistory(long userId){
+        List<Transfer> transferHistory = new ArrayList<>();
+
+        String sql = "SELECT * FROM transfer WHERE account_to = ? OR account_from = ? ORDER BY transaction_id;";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, getAccount(userId));
+        while(results.next()){
+            transferHistory.add(mapRowToTransfer(results));
+        }
+
+        return transferHistory;
+    }
+
+    @Override
     public boolean updateAccount(Account account, long userId) {
         boolean result = false;
 
@@ -52,6 +65,17 @@ public class JdbcAccountDao implements AccountDao {
         account.setUserId(rowSet.getLong("user_id"));
         account.setBalance(rowSet.getBigDecimal("balance"));
         return account;
+    }
+
+    private Transfer mapRowToTransfer(SqlRowSet rowSet){
+        Transfer transfer = new Transfer();
+        transfer.setTransferId(rowSet.getLong("transfer_id"));
+        transfer.setTransferTypeId(rowSet.getLong("transfer_type_id"));
+        transfer.setTransferStatusId(rowSet.getLong("transfer_status_id"));
+        transfer.setAccountFrom(rowSet.getLong("account_from"));
+        transfer.setAccountTo(rowSet.getLong("account_to"));
+        transfer.setAmount(rowSet.getBigDecimal("amount"));
+        return transfer;
     }
 
 }
