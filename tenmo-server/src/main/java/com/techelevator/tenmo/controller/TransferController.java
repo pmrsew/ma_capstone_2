@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/transfers")
@@ -41,8 +42,7 @@ public class TransferController {
     }
 
     //createRequestTransfer
-    //approveRequest
-    //declineRequest
+    //updateTransfer -- for status updating
 
 
 }

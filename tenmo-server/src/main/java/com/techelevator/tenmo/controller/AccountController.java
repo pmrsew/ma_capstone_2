@@ -2,12 +2,15 @@ package com.techelevator.tenmo.controller;
 
 import com.techelevator.tenmo.dao.AccountDao;
 import com.techelevator.tenmo.model.Account;
+import com.techelevator.tenmo.model.Transfer;
 import com.techelevator.tenmo.security.jwt.TokenProvider;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/accounts")
@@ -32,6 +35,14 @@ public class AccountController {
         Account account = accountDao.getAccount(userId);
         long result = account.getAccountId();
         return result;
+    }
+
+    @RequestMapping(path = "/{userId}/transferHistory", method = RequestMethod.GET)
+    public List<Transfer> getTransferHistory(@PathVariable long userId){
+        List<Transfer> transferHistory = new ArrayList<>();
+
+        return transferHistory;
+
     }
 
     @RequestMapping(path = "/{userId}", method = RequestMethod.GET)
