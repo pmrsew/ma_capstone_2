@@ -22,17 +22,22 @@ public class AccountController {
 
     @RequestMapping(path = "{userId}/balance", method = RequestMethod.GET)
     public BigDecimal getBalance(@PathVariable long userId){
-        BigDecimal balance = null;
-
-        balance = accountDao.getBalance(userId);
-
+        Account account = accountDao.getAccount(userId);
+        BigDecimal balance = account.getBalance();
         return balance;
     }
 
-    @RequestMapping(path = "/{userId}/accountId", method = RequestMethod.PUT)
+    @RequestMapping(path = "/{userId}/accountId", method = RequestMethod.GET)
     public long getAccountId(@PathVariable long userId){
         Account account = accountDao.getAccount(userId);
         long result = account.getAccountId();
+        return result;
+    }
+
+    @RequestMapping(path = "/{userId}", method = RequestMethod.GET)
+    public boolean updateAccount(@RequestBody Account updatedAccount, @PathVariable long userId){
+        boolean result = false;
+        result = accountDao.updateAccount(updatedAccount, userId);
         return result;
     }
 
