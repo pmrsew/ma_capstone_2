@@ -29,8 +29,12 @@ public class AccountController {
         return balance;
     }
 
-//    @RequestMapping(path = "/{userId}/accountId", method = RequestMethod.PUT)
-//    public long getAccountId(@PathVariable long userId, )
+    @RequestMapping(path = "/{userId}/accountId", method = RequestMethod.PUT)
+    public long getAccountId(@PathVariable long userId){
+        Account account = accountDao.getAccount(userId);
+        long result = account.getAccountId();
+        return result;
+    }
 
 
 }

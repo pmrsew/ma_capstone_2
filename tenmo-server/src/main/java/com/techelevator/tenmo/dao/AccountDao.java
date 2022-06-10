@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface AccountDao {
 
+    Account getAccount(long userId);
+
     long getAccountId(long userId);
 
     List<Account> getAllAccounts();

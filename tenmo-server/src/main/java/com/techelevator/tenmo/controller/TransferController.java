@@ -23,7 +23,7 @@ public class TransferController {
         this.transferDao = transferDao;
     }
 
-    @RequestMapping(path = "/{userId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/{transferId}", method = RequestMethod.GET)
     public Transfer getTransfer(@PathVariable long transferId){
         Transfer transfer = new Transfer();
 
