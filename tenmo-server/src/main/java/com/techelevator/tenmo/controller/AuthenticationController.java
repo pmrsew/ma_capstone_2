@@ -21,6 +21,7 @@ import com.techelevator.tenmo.security.jwt.TokenProvider;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -63,8 +64,8 @@ public class AuthenticationController {
     }
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public HashMap<Long, String> viewAll(){
-        HashMap<Long, String> allUsers = new HashMap<>();
+    public LinkedHashMap<Long, String> viewAll(){
+        LinkedHashMap<Long, String> allUsers = new LinkedHashMap<>();
 
         for(User user : userDao.findAll()){
             allUsers.put(user.getId(), user.getUsername());
