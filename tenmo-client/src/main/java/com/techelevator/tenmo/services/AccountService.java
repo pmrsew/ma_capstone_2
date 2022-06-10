@@ -2,6 +2,8 @@ package com.techelevator.tenmo.services;
 
 import com.techelevator.tenmo.model.Account;
 import com.techelevator.tenmo.model.AuthenticatedUser;
+import com.techelevator.tenmo.model.Transfer;
+import com.techelevator.tenmo.model.User;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -25,6 +27,14 @@ public class AccountService {
         BigDecimal balance = new BigDecimal(0);
         balance = restTemplate.exchange(BASEURL + "accounts/balance/" + currentUser.getUser().getId() , HttpMethod.GET, authHeader(), BigDecimal.class).getBody();
         return balance;
+    }
+
+    public Transfer sendFunds(User userFrom, User userTo, BigDecimal amount){
+        Transfer currentTransfer = new Transfer(userFrom, userTo, amount);
+        account.addTransfer(currentTransfer);
+
+
+        return currentTransfer;
     }
 
     private HttpEntity<?> authHeader(){
