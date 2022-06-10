@@ -25,7 +25,7 @@ public class AccountService {
     public BigDecimal getBalance(){
 
         BigDecimal balance = new BigDecimal(0);
-        balance = restTemplate.exchange(BASEURL + "accounts/balance/" + currentUser.getUser().getId() , HttpMethod.GET, authHeader(), BigDecimal.class).getBody();
+        balance = restTemplate.exchange(BASEURL + "accounts/" + currentUser.getUser().getId() + "/balance/" , HttpMethod.GET, authHeader(), BigDecimal.class).getBody();
         return balance;
     }
 
