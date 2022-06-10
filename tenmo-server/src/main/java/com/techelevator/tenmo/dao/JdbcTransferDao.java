@@ -42,7 +42,7 @@ public class JdbcTransferDao implements TransferDao{
             if(isSend){
                 transferId = jdbcTemplate.queryForObject(sql, Long.class, account_from, account_to, amount, 2, 2);
             }else{
-                transferId = jdbcTemplate.queryForObject(sql, Long.class, account_from, account_to, 1, 1);
+                transferId = jdbcTemplate.queryForObject(sql, Long.class, account_from, account_to, amount, 1, 1);
             }
         } catch (DataAccessException e) {
                 transferId = -1;

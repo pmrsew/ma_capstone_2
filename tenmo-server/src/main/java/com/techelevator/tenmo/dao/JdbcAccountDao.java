@@ -2,6 +2,7 @@ package com.techelevator.tenmo.dao;
 
 
 import com.techelevator.tenmo.model.Account;
+import com.techelevator.tenmo.model.Transfer;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -20,6 +21,17 @@ public class JdbcAccountDao implements AccountDao {
     }
 
     @Override
+    public long getAccountId(long userId){
+        long accountId;
+
+        String sql = "SELECT account_id FROM account WHERE user_id = ?;";
+        SqlRowSet result = jdbcTemplate.queryForRowSet(sql, userId);
+        accountId = result.getLong("account_id");
+
+        return accountId;
+    }
+
+    @Override
     public List<Account> getAllAccounts() {
         List<Account> accounts = new ArrayList<>();
 
@@ -33,10 +45,10 @@ public class JdbcAccountDao implements AccountDao {
     }
 
     @Override
-    public BigDecimal getBalance(Long userId) {
+    public BigDecimal getBalance(long userId) {
         BigDecimal balance = null;
 
-        String sql = "SELECT account_id, user_id, balance FROM account WHERE user_id = ?;"; //Had to add all column names
+        String sql = "SELECT account_id, user_id, balance FROM account WHERE user_id = ?;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
 
         while(results.next()){
@@ -46,6 +58,19 @@ public class JdbcAccountDao implements AccountDao {
 
         return balance;
 
+    }
+
+    @Override
+    public boolean update(long userId, Account account){
+        boolean result = false;
+
+        /*String sql = "UPDATE account SET balance = ? WHERE user_id = ?;";
+        int numberOfRowsUpdated = jdbcTemplate.update(sql, account.getBalance(), userId);
+        if(numberOfRowsUpdated == 1){
+            result = true;
+        }*/
+
+        return result;
     }
 
     private Account mapRowToAccount(SqlRowSet rowSet){

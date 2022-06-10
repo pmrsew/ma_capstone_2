@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 
-@RestController //Added
+@RestController
 @RequestMapping("/accounts")
-@PreAuthorize("isAuthenticated()") //Added
+@PreAuthorize("isAuthenticated()")
 public class AccountController {
 
     private AccountDao accountDao;
@@ -20,14 +20,17 @@ public class AccountController {
         this.accountDao = accountDao;
     }
 
-    @RequestMapping(path = "/balance/{userId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/{userId}/balance", method = RequestMethod.GET)
     public BigDecimal getBalance(@PathVariable long userId){
         BigDecimal balance = null;
 
         balance = accountDao.getBalance(userId);
-        //I forget to set method to the balance
-        //Now that it is correctly set, data is being pulled
 
         return balance;
     }
+
+//    @RequestMapping(path = "/{userId}/accountId", method = RequestMethod.PUT)
+//    public long getAccountId(@PathVariable long userId, )
+
+
 }
