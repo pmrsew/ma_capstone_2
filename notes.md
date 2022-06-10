@@ -57,4 +57,11 @@ for accessing database information (use cases as reference)
 
 Start filling in skeletons and App.java methods, can be systematic or random.
 
+## Server Side
+
+-User Ids of from and to users, amount of te bucks
+-receiver's account balance is increased
+-sender's account balance is decreased
+
+
 
