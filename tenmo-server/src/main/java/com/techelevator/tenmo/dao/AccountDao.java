@@ -9,7 +9,6 @@ import java.util.List;
 public interface AccountDao {
 
     Account getAccount(long userId);
-
     boolean updateAccount(Account account, long userId);
 
 }
