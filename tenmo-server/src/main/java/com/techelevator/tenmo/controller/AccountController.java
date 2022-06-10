@@ -20,7 +20,7 @@ public class AccountController {
         this.accountDao = accountDao;
     }
 
-    @RequestMapping(path = "/{userId}/balance", method = RequestMethod.GET)
+    @RequestMapping(path = "{userId}/balance", method = RequestMethod.GET)
     public BigDecimal getBalance(@PathVariable long userId){
         BigDecimal balance = null;
 
