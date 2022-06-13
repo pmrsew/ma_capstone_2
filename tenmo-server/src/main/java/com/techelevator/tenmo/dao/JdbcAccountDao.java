@@ -50,7 +50,7 @@ public class JdbcAccountDao implements AccountDao {
     public boolean updateAccount(Account account, long userId) {
         boolean result = false;
 
-        String sql = "UPDATE account SET balance = ? WHERE account_id = ?;";
+        String sql = "UPDATE account SET balance = ? WHERE user_id = ?;";
         int returnedRows = jdbcTemplate.update(sql, account.getBalance(), userId);
         if(returnedRows == 1){
             result = true;

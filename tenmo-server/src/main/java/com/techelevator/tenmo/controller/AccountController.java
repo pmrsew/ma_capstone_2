@@ -45,7 +45,7 @@ public class AccountController {
 
     }
 
-    @RequestMapping(path = "/{userId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/{userId}", method = RequestMethod.PUT)
     public boolean updateAccount(@RequestBody Account updatedAccount, @PathVariable long userId){
         boolean result = false;
         result = accountDao.updateAccount(updatedAccount, userId);
