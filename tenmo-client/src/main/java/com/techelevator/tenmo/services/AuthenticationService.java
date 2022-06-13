@@ -1,6 +1,6 @@
 package com.techelevator.tenmo.services;
 
-import com.techelevator.tenmo.controller.AuthenticationController;
+
 import com.techelevator.tenmo.model.User;
 import com.techelevator.util.BasicLogger;
 import org.springframework.http.HttpEntity;
@@ -17,7 +17,9 @@ import com.techelevator.tenmo.model.AuthenticatedUser;
 import com.techelevator.tenmo.model.UserCredentials;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AuthenticationService {
 
@@ -55,9 +57,31 @@ public class AuthenticationService {
     }
 
     @GetMapping("/users")
-    public List<User> viewAll(){
+    public List<String> getAll(){
+        List<String> usernames = new ArrayList<>();
+        LinkedHashMap<Long, String> userList = new LinkedHashMap();
+        LinkedHashMap<Long, String> users = restTemplate.getForObject(baseUrl + "users/", LinkedHashMap.class);
+        for(Map.Entry<Long, String> user: users.entrySet()){
+            usernames.add(user.getValue());
+        }
+        return usernames;
+//        List<String> userList = new ArrayList<>();
 
-        return new ArrayList<User>();
+
+    }
+
+    public void viewAll(){
+        System.out.println("Available users in your network: ");
+        boolean isFirst = true;
+        for(String user : getAll()){
+            if(isFirst){
+                isFirst = false;
+            } else{
+                System.out.print(", ");
+            }
+            System.out.print(user);
+        }
+        System.out.println();
     }
 
 
