@@ -8,6 +8,7 @@ import java.util.List;
 public interface TransferDao {
 
     Transfer getTransfer(long transferId);
-    boolean create(long account_from, long account_to, BigDecimal amount, boolean isSend);
+    List<Transfer> transferHistory(long accountId);
+    long createTransfer(long account_from, long account_to, BigDecimal amount, boolean isSend);
 
 }

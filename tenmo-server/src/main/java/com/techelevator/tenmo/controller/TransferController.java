@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -33,12 +34,16 @@ public class TransferController {
         return transfer;
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
+    @RequestMapping(path = "/{accountId}/history", method = RequestMethod.GET)
+    public List<Transfer> transferHistory(@PathVariable long accountId){
+        List<Transfer> transferHistory = transferDao.transferHistory(accountId);
+        return transferHistory;
+    }
+
     @RequestMapping(path = "/send", method = RequestMethod.POST)
-    public void createSendTransfer(@Valid @RequestBody Transfer transfer) {
-        if (!transferDao.create(transfer.getAccountFrom(), transfer.getAccountTo(), transfer.getAmount(), true)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Transfer creation failed");
-        }
+    public long createSendTransfer(@Valid @RequestBody Transfer transfer) {
+        long result = transferDao.createTransfer(transfer.getAccountFrom(), transfer.getAccountTo(), transfer.getAmount(), true);
+        return result;
     }
 
     //createRequestTransfer
