@@ -34,19 +34,6 @@ public class JdbcAccountDao implements AccountDao {
     }
 
     @Override
-    public List<Transfer> getTransferHistory(long userId){
-        List<Transfer> transferHistory = new ArrayList<>();
-
-        String sql = "SELECT * FROM transfer WHERE account_to = ? OR account_from = ? ORDER BY transaction_id;";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, getAccount(userId));
-        while(results.next()){
-            transferHistory.add(mapRowToTransfer(results));
-        }
-
-        return transferHistory;
-    }
-
-    @Override
     public boolean updateAccount(Account account, long userId) {
         boolean result = false;
 
