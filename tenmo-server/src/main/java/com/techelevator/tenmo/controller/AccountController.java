@@ -45,11 +45,17 @@ public class AccountController {
 
     }
 
-    @RequestMapping(path = "/{userId}", method = RequestMethod.PUT)
+    @PutMapping(path = "/{userId}")
     public boolean updateAccount(@RequestBody Account updatedAccount, @PathVariable long userId){
         boolean result = false;
         result = accountDao.updateAccount(updatedAccount, userId);
         return result;
+    }
+    @GetMapping(path = "/{userId}")
+    public Account getAccount(@PathVariable long userId){
+
+        return accountDao.getAccount(userId);
+
     }
 
 

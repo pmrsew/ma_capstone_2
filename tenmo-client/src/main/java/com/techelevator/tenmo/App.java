@@ -1,16 +1,16 @@
-package com.techelevator.tenmo;
+        package com.techelevator.tenmo;
 
-import com.techelevator.tenmo.model.AuthenticatedUser;
-import com.techelevator.tenmo.model.User;
-import com.techelevator.tenmo.model.UserCredentials;
-import com.techelevator.tenmo.services.AccountService;
-import com.techelevator.tenmo.services.AuthenticationService;
-import com.techelevator.tenmo.services.ConsoleService;
-import io.cucumber.java.bs.A;
+        import com.techelevator.tenmo.model.Account;
+        import com.techelevator.tenmo.model.AuthenticatedUser;
+        import com.techelevator.tenmo.model.User;
+        import com.techelevator.tenmo.model.UserCredentials;
+        import com.techelevator.tenmo.services.AccountService;
+        import com.techelevator.tenmo.services.AuthenticationService;
+        import com.techelevator.tenmo.services.ConsoleService;
 
-import java.util.List;
+        import java.util.*;
 
-public class App {
+        public class App {
 
     private static final String API_BASE_URL = "http://localhost:8080/";
 
@@ -69,6 +69,7 @@ public class App {
     }
 
     private void mainMenu() {
+        accountService = new AccountService(API_BASE_URL, currentUser);
         int menuSelection = -1;
         while (menuSelection != 0) {
             consoleService.printMainMenu();
@@ -92,26 +93,26 @@ public class App {
         }
     }
 
-	private void viewCurrentBalance() {
-		// TODO Auto-generated method stub
-        accountService = new AccountService(API_BASE_URL, currentUser);
+    private void viewCurrentBalance() {
+        // TODO Auto-generated method stub
+
         System.out.println(accountService.getBalance());
-		
-	}
 
-	private void viewTransferHistory() {
-		// TODO Auto-generated method stub
+    }
+
+    private void viewTransferHistory() {
+        // TODO Auto-generated method stub
         //includes ability to view details on specific transactions
-		
-	}
 
-	private void viewPendingRequests() {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	private void sendBucks() {
-		// TODO Auto-generated method stub
+    private void viewPendingRequests() {
+        // TODO Auto-generated method stub
+
+    }
+
+    private void sendBucks() {
+        // TODO Auto-generated method stub
         /*  As an authenticated user of the system, I need to be able to send a transfer of a specific
             amount of TE Bucks to a registered user.
                 I should be able to choose from a list of users to send TE Bucks to.
@@ -123,16 +124,34 @@ public class App {
                 I can't send a zero or negative amount.
                 A Sending Transfer has an initial status of Approved.
         */
-        authenticationService.viewAll();
+
+        Map<Integer, Account> menuMap = new HashMap<>();
+        LinkedHashMap<Long, String> users = authenticationService.getUsers();
+        StringBuilder menuString = new StringBuilder("");
+        int k = 1;
+        for(Map.Entry<Long, String> user: users.entrySet()){
+            Long userId = user.getKey();
+            String username = user.getValue();
+            menuString.append(String.format("%d: %s%n", k, username));
+            User currentUser = new User();
+            currentUser.setUsername(username);
+            currentUser.setId(userId);
+            accountService.getAccount(currentUser);
+            menuMap.put(k, accountService.getAccount(currentUser));
+            k++;
+        }
+        int menuSelection = consoleService.promptForMenuSelection("Please choose a user: \n" + menuString.toString());
 
 
 
-		
-	}
 
-	private void requestBucks() {
-		// TODO Auto-generated method stub
-		//Optional use case
-	}
+
+
+    }
+
+    private void requestBucks() {
+        // TODO Auto-generated method stub
+        //Optional use case
+    }
 
 }

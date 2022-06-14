@@ -8,6 +8,7 @@ import io.cucumber.java.bs.A;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
@@ -24,6 +25,7 @@ public class AccountService {
         BASEURL = url;
         this.currentUser = currentUser;
     }
+
     public BigDecimal getBalance(){
 
         BigDecimal balance = new BigDecimal(0);
@@ -33,28 +35,28 @@ public class AccountService {
                 BigDecimal.class).getBody();
         return balance;
     }
+    public Account getAccount(){
 
-//    public Transfer sendFunds(User userFrom, User userTo, BigDecimal amount){
-//        Transfer currentTransfer = new Transfer(userFrom, userTo, amount);
-//        BigDecimal currentBalance = getBalance();
-//        long accountFromID =restTemplate.exchange(BASEURL + "accounts/" + userFrom.getId() + "/accountId/" , HttpMethod.GET, authHeader(), Long.class).getBody();
-//        long accountToID =restTemplate.exchange(BASEURL + "accounts/" + userTo.getId() + "/accountId/" , HttpMethod.GET, authHeader(), Long.class).getBody();
-//
-//        if(currentBalance.compareTo(amount) == -1){
-//            return null;
-//        } else{
-//
-//        }
-//        account.addTransfer(currentTransfer);
-//
-//
-//        return currentTransfer;
-//    }
+        Account account = restTemplate.exchange(BASEURL + "accounts/" + currentUser.getUser().getId() , HttpMethod.GET, authHeader(), Account.class).getBody();
+        return account;
+    }
+    public Account getAccount(User user){
+        Account account = restTemplate.exchange(BASEURL + "accounts/" + currentUser.getUser().getId() , HttpMethod.GET, authHeader(), Account.class).getBody();
+        return account;
+    }
 
-    public Account changeAccountValue(){
-        Account changeAccount =new Account();
+
+    public Account updateAccount(Account account){
+
+        account.setBalance((account.getBalance()).add(new BigDecimal(1)));
+        System.out.println(account.getBalance());
+        restTemplate.exchange(BASEURL + "accounts/" + currentUser.getUser().getId(), HttpMethod.PUT, authHeader(account), Void.class);
+
+
+        return account;
 
     }
+
 
 
 
@@ -64,6 +66,14 @@ public class AccountService {
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(currentUser.getToken());
         HttpEntity entity = new HttpEntity(headers);
+        return entity;
+    }
+    private HttpEntity authHeader(Account account){
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(currentUser.getToken());
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity entity = new HttpEntity(account, headers);
         return entity;
     }
 }

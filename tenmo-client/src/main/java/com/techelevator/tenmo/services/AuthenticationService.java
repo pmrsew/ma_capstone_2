@@ -56,8 +56,8 @@ public class AuthenticationService {
         return success;
     }
 
-    @GetMapping("/users")
-    public List<String> getAll(){
+
+    public List<String> getAllNames(){
         List<String> usernames = new ArrayList<>();
         LinkedHashMap<Long, String> userList = new LinkedHashMap();
         LinkedHashMap<Long, String> users = restTemplate.getForObject(baseUrl + "users/", LinkedHashMap.class);
@@ -65,15 +65,24 @@ public class AuthenticationService {
             usernames.add(user.getValue());
         }
         return usernames;
-//        List<String> userList = new ArrayList<>();
-
-
+    }
+    public List<Long> getAllIds(){
+        List<Long> ids = new ArrayList<>();
+        LinkedHashMap<Long, String> userList = new LinkedHashMap();
+        LinkedHashMap<Long, String> users = restTemplate.getForObject(baseUrl + "users/", LinkedHashMap.class);
+        for(Map.Entry<Long, String> user: users.entrySet()){
+            ids.add(user.getKey());
+        }
+        return ids;
+    }
+    public LinkedHashMap<Long, String> getUsers(){
+        return restTemplate.getForObject(baseUrl + "users/", LinkedHashMap.class);
     }
 
     public void viewAll(){
         System.out.println("Available users in your network: ");
         boolean isFirst = true;
-        for(String user : getAll()){
+        for(String user : getAllNames()){
             if(isFirst){
                 isFirst = false;
             } else{
