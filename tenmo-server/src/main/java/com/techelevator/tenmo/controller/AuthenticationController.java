@@ -20,9 +20,9 @@ import com.techelevator.tenmo.model.User;
 import com.techelevator.tenmo.security.jwt.TokenProvider;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.HashMap;
+//import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
+//import java.util.List;
 
 /**
  * Controller to authenticate users.
@@ -63,12 +63,13 @@ public class AuthenticationController {
         }
     }
 
+
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public LinkedHashMap<Long, String> viewAll(){
-        LinkedHashMap<Long, String> allUsers = new LinkedHashMap<>();
+    public LinkedHashMap<String, Long> viewAllTest(){
+        LinkedHashMap<String, Long> allUsers = new LinkedHashMap<>();
 
         for(User user : userDao.findAll()){
-            allUsers.put(user.getId(), user.getUsername());
+            allUsers.put(user.getUsername(), user.getId());
         }
 
         return allUsers;
