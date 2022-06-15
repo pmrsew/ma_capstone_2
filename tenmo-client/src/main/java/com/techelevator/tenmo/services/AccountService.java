@@ -41,15 +41,14 @@ public class AccountService {
         return account;
     }
     public Account getAccount(User user){
-        Account account = restTemplate.exchange(BASEURL + "accounts/" + currentUser.getUser().getId() , HttpMethod.GET, authHeader(), Account.class).getBody();
+        Account account = restTemplate.exchange(BASEURL + "accounts/" + user.getUser().getId() , HttpMethod.GET, authHeader(), Account.class).getBody();
         return account;
     }
 
 
     public Account updateAccount(Account account){
 
-        account.setBalance((account.getBalance()).add(new BigDecimal(1)));
-        System.out.println(account.getBalance());
+
         restTemplate.exchange(BASEURL + "accounts/" + currentUser.getUser().getId(), HttpMethod.PUT, authHeader(account), Void.class);
 
 

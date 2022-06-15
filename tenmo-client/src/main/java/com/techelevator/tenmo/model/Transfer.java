@@ -13,15 +13,19 @@ public class Transfer {
     private long transferStatusId;
     private long accountFrom;
     private long accountTo;
+    private Account fromAccount;
+    private Account toAccount;
     private User userFrom;
     private User userTo;
     private BigDecimal amount;
 
     public Transfer(){}
 
-    public Transfer(User userFrom, User userTo, BigDecimal amount){
-        this.userFrom = userFrom;
-        this.userTo = userTo;
+    public Transfer(Account fromAccount, Account toAccount, BigDecimal amount){
+        this.fromAccount = fromAccount;
+        this.toAccount = toAccount;
+        this.accountFrom = fromAccount.getAccountId();
+        this.accountTo = toAccount.getAccountId();
         this.amount = amount;
     }
 
