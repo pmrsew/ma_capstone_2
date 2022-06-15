@@ -16,10 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import com.techelevator.tenmo.model.AuthenticatedUser;
 import com.techelevator.tenmo.model.UserCredentials;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class AuthenticationService {
 
@@ -77,6 +74,15 @@ public class AuthenticationService {
     }
     public LinkedHashMap<String, Integer> getUsers(){
         return restTemplate.getForObject(baseUrl + "users/", LinkedHashMap.class);
+    }
+
+    public HashMap<Integer, String> getUsersById(){
+        HashMap<Integer, String> userMap = new HashMap<>();
+        for(Map.Entry<String, Integer> entry : getUsers().entrySet()){
+            userMap.put(entry.getValue(), entry.getKey());
+        }
+
+        return userMap;
     }
 
     public void viewAll(){
