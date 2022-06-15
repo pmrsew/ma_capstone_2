@@ -75,7 +75,7 @@ public class AuthenticationService {
         }
         return ids;
     }
-    public LinkedHashMap<Long, String> getUsers(){
+    public LinkedHashMap<String, Integer> getUsers(){
         return restTemplate.getForObject(baseUrl + "users/", LinkedHashMap.class);
     }
 

@@ -8,4 +8,9 @@ public class TransferService {
     private String BASEURL;
     private RestTemplate restTemplate = new RestTemplate();
     private AuthenticatedUser currentUser;
+
+    public TransferService(String url, AuthenticatedUser currentUser){
+        BASEURL = url;
+        this.currentUser = currentUser;
+    }
 }

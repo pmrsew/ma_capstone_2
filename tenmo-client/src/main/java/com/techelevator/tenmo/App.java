@@ -7,6 +7,7 @@
         import com.techelevator.tenmo.services.AccountService;
         import com.techelevator.tenmo.services.AuthenticationService;
         import com.techelevator.tenmo.services.ConsoleService;
+        import com.techelevator.tenmo.services.TransferService;
 
         import java.util.*;
 
@@ -20,7 +21,7 @@
 
     private AuthenticatedUser currentUser;
     private AccountService accountService;
-
+    private TransferService transferService;
 
     public static void main(String[] args) {
         App app = new App();
@@ -70,6 +71,7 @@
 
     private void mainMenu() {
         accountService = new AccountService(API_BASE_URL, currentUser);
+        transferService = new TransferService(API_BASE_URL, currentUser);
         int menuSelection = -1;
         while (menuSelection != 0) {
             consoleService.printMainMenu();
@@ -126,12 +128,12 @@
         */
 
         Map<Integer, Account> menuMap = new HashMap<>();
-        LinkedHashMap<Long, String> users = authenticationService.getUsers();
+        LinkedHashMap<String, Integer> users = authenticationService.getUsers();
         StringBuilder menuString = new StringBuilder("");
         int k = 1;
-        for(Map.Entry<Long, String> user: users.entrySet()){
-            Long userId = user.getKey();
-            String username = user.getValue();
+        for(Map.Entry<String, Integer> user: users.entrySet()){
+            Long userId = (long)user.getValue();
+            String username = user.getKey();
             menuString.append(String.format("%d: %s%n", k, username));
             User currentUser = new User();
             currentUser.setUsername(username);
