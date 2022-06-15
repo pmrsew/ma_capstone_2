@@ -1,14 +1,12 @@
         package com.techelevator.tenmo;
 
-        import com.techelevator.tenmo.model.Account;
-        import com.techelevator.tenmo.model.AuthenticatedUser;
-        import com.techelevator.tenmo.model.User;
-        import com.techelevator.tenmo.model.UserCredentials;
+        import com.techelevator.tenmo.model.*;
         import com.techelevator.tenmo.services.AccountService;
         import com.techelevator.tenmo.services.AuthenticationService;
         import com.techelevator.tenmo.services.ConsoleService;
         import com.techelevator.tenmo.services.TransferService;
 
+        import java.math.BigDecimal;
         import java.util.*;
 
         public class App {
@@ -130,19 +128,25 @@
         Map<Integer, Account> menuMap = new HashMap<>();
         LinkedHashMap<String, Integer> users = authenticationService.getUsers();
         StringBuilder menuString = new StringBuilder("");
+        Account currentAccount = new Account();
         int k = 1;
         for(Map.Entry<String, Integer> user: users.entrySet()){
             Long userId = (long)user.getValue();
             String username = user.getKey();
             menuString.append(String.format("%d: %s%n", k, username));
-            User currentUser = new User();
-            currentUser.setUsername(username);
-            currentUser.setId(userId);
-            accountService.getAccount(currentUser);
-            menuMap.put(k, accountService.getAccount(currentUser));
+            User thisUser = new User();
+            thisUser.setUsername(username);
+            thisUser.setId(userId);
+            currentAccount = accountService.getAccount(thisUser);
+            menuMap.put(k, accountService.getAccount(thisUser));
             k++;
         }
         int menuSelection = consoleService.promptForMenuSelection("Please choose a user: \n" + menuString.toString());
+        BigDecimal amountToSend = consoleService.promptForBigDecimal("How much would you like to send?");
+        //create new Transaction between currentUser.getAccount and menuMap.getKey(menuSelection)
+        Transfer thisTransfer = new Transfer(currentAccount, menuMap.get(menuSelection), amountToSend);
+        transferService.sendCash(thisTransfer);
+
 
 
 
