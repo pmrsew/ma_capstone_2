@@ -20,10 +20,12 @@ public class AccountService {
     private RestTemplate restTemplate = new RestTemplate();
     private AuthenticatedUser currentUser;
     private Account account;
+    private AuthenticationService authenticationService;
 
     public AccountService(String url, AuthenticatedUser currentUser){
         BASEURL = url;
         this.currentUser = currentUser;
+        currentUser.setAccount(getAccount());
     }
 
     public BigDecimal getBalance(){
@@ -46,10 +48,11 @@ public class AccountService {
     }
 
 
-    public Account updateAccount(Account account){
+    public Account updateAccount(Account account, BigDecimal amount){
 
-
-        restTemplate.exchange(BASEURL + "accounts/" + currentUser.getUser().getId(), HttpMethod.PUT, authHeader(account), Void.class);
+        BigDecimal  balance = account.getBalance().add(amount);
+        account.setBalance(balance);
+        restTemplate.exchange(BASEURL + "accounts/" + account.getUserId(), HttpMethod.PUT, authHeader(account), Void.class);
 
 
         return account;

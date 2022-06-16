@@ -104,6 +104,18 @@
         // TODO Auto-generated method stub
         //includes ability to view details on specific transactions
 
+
+        for(Transfer transfer : transferService.getPastTransfers()){
+            Account currentAccount = transfer.getToAccount();
+            System.out.println("Got Account");
+            long userId = currentAccount.getUserId();
+            System.out.println("Got userID: " + userId);
+            System.out.println("-----------------");
+            System.out.println("Transfer ID: " + transfer.getTransferId());
+            System.out.println("User: " + "");
+            System.out.println("Amount: " + transfer.getAmount());
+        }
+
     }
 
     private void viewPendingRequests() {
@@ -128,7 +140,7 @@
         Map<Integer, Account> menuMap = new HashMap<>();
         LinkedHashMap<String, Integer> users = authenticationService.getUsers();
         StringBuilder menuString = new StringBuilder("");
-        Account currentAccount = new Account();
+
         int k = 1;
         for(Map.Entry<String, Integer> user: users.entrySet()){
             Long userId = (long)user.getValue();
@@ -137,15 +149,16 @@
             User thisUser = new User();
             thisUser.setUsername(username);
             thisUser.setId(userId);
-            currentAccount = accountService.getAccount(thisUser);
+
             menuMap.put(k, accountService.getAccount(thisUser));
             k++;
         }
         int menuSelection = consoleService.promptForMenuSelection("Please choose a user: \n" + menuString.toString());
         BigDecimal amountToSend = consoleService.promptForBigDecimal("How much would you like to send?");
-        //create new Transaction between currentUser.getAccount and menuMap.getKey(menuSelection)
-        Transfer thisTransfer = new Transfer(currentAccount, menuMap.get(menuSelection), amountToSend);
-        transferService.sendCash(thisTransfer);
+        Transfer thisTransfer = new Transfer(accountService.getAccount(), menuMap.get(menuSelection), amountToSend);
+
+        boolean sent = transferService.sendCash(thisTransfer);
+
 
 
 
