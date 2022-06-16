@@ -46,8 +46,17 @@ public class TransferController {
         return result;
     }
 
-    //createRequestTransfer
-    //updateTransfer -- for status updating
+    @RequestMapping(path = "/request", method = RequestMethod.POST)
+    public long createRequestTransfer(@Valid @RequestBody Transfer transfer) {
+        long result = transferDao.createTransfer(transfer.getAccountFrom(), transfer.getAccountTo(), transfer.getAmount(), false);
+        return result;
+    }
 
+    @RequestMapping(path = "/{transferId}/update", method = RequestMethod.PUT)
+    public boolean updateTransfer(@RequestBody Transfer transfer, @PathVariable long transferId){
+        boolean result = false;
+        result = transferDao.updateTransfer(transfer,transferId);
+        return result;
 
+    }
 }

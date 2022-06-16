@@ -10,5 +10,6 @@ public interface TransferDao {
     Transfer getTransfer(long transferId);
     List<Transfer> transferHistory(long accountId);
     long createTransfer(long account_from, long account_to, BigDecimal amount, boolean isSend);
+    boolean updateTransfer(Transfer transfer, long transferId);
 
 }
