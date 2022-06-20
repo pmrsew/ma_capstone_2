@@ -48,6 +48,29 @@ public class TransferService {
         return restTemplate.exchange(BASEURL + "/" + accountService.getAccount().getAccountId() + "/history/", HttpMethod.GET, authHeader(), Transfer[].class).getBody();
     }
 
+    public Transfer getTransferById(int id) {
+        return restTemplate.exchange(BASEURL + "/" + id , HttpMethod.GET, authHeader(), Transfer.class).getBody();
+
+    }
+
+
+    public String transferDetails(Transfer transfer, AuthenticationService authenticationService){
+            StringBuilder sb = new StringBuilder("");
+
+            long toAccountId = transfer.getAccountTo();
+            long toUserId = authenticationService.getAccountId(toAccountId);
+            long fromAccountId = transfer.getAccountFrom();
+            long fromUserId = authenticationService.getAccountId(fromAccountId);
+            sb.append(String.format("-----------------\n"));
+            sb.append(String.format("Transfer ID: %d\n", transfer.getTransferId()));
+            sb.append(String.format("From %s to %s\n", authenticationService.getUsername(fromUserId), authenticationService.getUsername(toUserId)));
+            sb.append(String.format("Amount: %.2f\n", transfer.getAmount()));
+
+            return sb.toString();
+
+    }
+
+
     private HttpEntity authHeader(Transfer transfer){
 
         HttpHeaders headers = new HttpHeaders();

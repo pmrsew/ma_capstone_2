@@ -76,10 +76,26 @@ public class AuthenticationService {
         return restTemplate.getForObject(baseUrl + "users/", LinkedHashMap.class);
     }
 
+    public String getUsername(long userId){
+        var userList = getUsersById();
+        for(Map.Entry<Integer, String> entry : userList.entrySet()){
+            if(entry.getKey() == userId)
+                return entry.getValue();
+        }
+
+        return null;
+    }
+
+    public Long getAccountId(Long accountId){
+        User user = restTemplate.getForObject(baseUrl + "/users/" + accountId, User.class);
+        return user.getId();
+    }
+
     public HashMap<Integer, String> getUsersById(){
         HashMap<Integer, String> userMap = new HashMap<>();
         for(Map.Entry<String, Integer> entry : getUsers().entrySet()){
             userMap.put(entry.getValue(), entry.getKey());
+
         }
 
         return userMap;

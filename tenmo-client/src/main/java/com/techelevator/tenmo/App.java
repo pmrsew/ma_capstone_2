@@ -84,6 +84,8 @@
                 sendBucks();
             } else if (menuSelection == 5) {
                 requestBucks();
+            } else if (menuSelection == 6) {
+                viewSingleTransfer();
             } else if (menuSelection == 0) {
                 continue;
             } else {
@@ -106,17 +108,12 @@
 
 
         for(Transfer transfer : transferService.getPastTransfers()){
-            Account currentAccount = transfer.getToAccount();
-            System.out.println("Got Account");
-            long userId = currentAccount.getUserId();
-            System.out.println("Got userID: " + userId);
-            System.out.println("-----------------");
-            System.out.println("Transfer ID: " + transfer.getTransferId());
-            System.out.println("User: " + "");
-            System.out.println("Amount: " + transfer.getAmount());
+            System.out.println(transferService.transferDetails(transfer, authenticationService));
         }
 
     }
+
+
 
     private void viewPendingRequests() {
         // TODO Auto-generated method stub
@@ -144,6 +141,9 @@
         int k = 1;
         for(Map.Entry<String, Integer> user: users.entrySet()){
             Long userId = (long)user.getValue();
+            if(userId.equals(currentUser.getUser().getId())){
+                continue;
+            }
             String username = user.getKey();
             menuString.append(String.format("%d: %s%n", k, username));
             User thisUser = new User();
@@ -157,20 +157,24 @@
         BigDecimal amountToSend = consoleService.promptForBigDecimal("How much would you like to send?");
         Transfer thisTransfer = new Transfer(accountService.getAccount(), menuMap.get(menuSelection), amountToSend);
 
+
         boolean sent = transferService.sendCash(thisTransfer);
-
-
-
-
-
-
-
 
     }
 
     private void requestBucks() {
         // TODO Auto-generated method stub
         //Optional use case
+    }
+
+    private void viewSingleTransfer(){
+        int transferId = consoleService.promptForInt("Which transfer would you like to see? ");
+        System.out.println(transferService.transferDetails(
+                transferService.getTransferById(transferId), authenticationService)
+        );
+
+
+
     }
 
 }

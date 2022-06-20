@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/accounts")
-//@PreAuthorize("isAuthenticated()")
+@PreAuthorize("isAuthenticated()")
 public class AccountController {
 
     private AccountDao accountDao;
