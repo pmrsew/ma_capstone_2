@@ -20,7 +20,7 @@ public class JdbcTransferDao implements TransferDao{
 
     @Override
     public Transfer getTransfer(long transferId) {
-        Transfer transfer = new Transfer();
+        Transfer transfer = null;
         String sql = "SELECT * FROM transfer WHERE transfer_id = ?; ";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, transferId);
         while(results.next()){
@@ -42,7 +42,7 @@ public class JdbcTransferDao implements TransferDao{
 
     @Override
     public long createTransfer(long account_from, long account_to, BigDecimal amount, boolean isSend) {
-        long transferId = 0;
+        long transferId = -1;
 
         //add to transfer table
         String sql = "INSERT INTO transfer (account_from, account_to, amount, transfer_status_id, transfer_type_id) VALUES (?, ?, ?, ?, ?) RETURNING transfer_id";

@@ -63,6 +63,7 @@ public class AuthenticationService {
         }
         return usernames;
     }
+
     public List<Long> getAllIds(){
         List<Long> ids = new ArrayList<>();
         LinkedHashMap<Long, String> userList = new LinkedHashMap();
@@ -72,6 +73,7 @@ public class AuthenticationService {
         }
         return ids;
     }
+
     public LinkedHashMap<String, Integer> getUsers(){
         return restTemplate.getForObject(baseUrl + "users/", LinkedHashMap.class);
     }
@@ -114,6 +116,7 @@ public class AuthenticationService {
         }
         System.out.println();
     }
+
 
 
 

@@ -1,11 +1,14 @@
 package com.techelevator.tenmo.model;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 
 public class Account {
 
+    @NotNull(message = "Account ID cannot be null")
     private long accountId;
+    @NotNull(message = "User ID cannot be null")
     private long userId;
     @Positive(message = "Account Balance cannot be negative")
     private BigDecimal balance;

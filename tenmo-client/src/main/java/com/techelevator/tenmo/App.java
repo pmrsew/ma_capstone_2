@@ -95,33 +95,26 @@
         }
     }
 
+    //Todo
     private void viewCurrentBalance() {
-        // TODO Auto-generated method stub
-
         System.out.println(accountService.getBalance());
-
     }
 
+    //Todo
     private void viewTransferHistory() {
-        // TODO Auto-generated method stub
-        //includes ability to view details on specific transactions
-
-
         for(Transfer transfer : transferService.getPastTransfers()){
             System.out.println(transferService.transferDetails(transfer, authenticationService));
         }
-
     }
-
-
 
     private void viewPendingRequests() {
-        // TODO Auto-generated method stub
-
+        // TODO Optional use case
     }
 
+    //To do
     private void sendBucks() {
         // TODO Auto-generated method stub
+
         /*  As an authenticated user of the system, I need to be able to send a transfer of a specific
             amount of TE Bucks to a registered user.
                 I should be able to choose from a list of users to send TE Bucks to.
@@ -163,18 +156,15 @@
     }
 
     private void requestBucks() {
-        // TODO Auto-generated method stub
-        //Optional use case
+        // TODO Optional use case
     }
 
+    //Todo
     private void viewSingleTransfer(){
         int transferId = consoleService.promptForInt("Which transfer would you like to see? ");
         System.out.println(transferService.transferDetails(
                 transferService.getTransferById(transferId), authenticationService)
         );
-
-
-
     }
 
 }

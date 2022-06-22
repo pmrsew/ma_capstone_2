@@ -17,6 +17,7 @@ import com.techelevator.tenmo.security.jwt.TokenProvider;
 import org.springframework.web.server.ResponseStatusException;
 
 //import java.util.HashMap;
+import java.security.Principal;
 import java.util.LinkedHashMap;
 //import java.util.List;
 
@@ -59,24 +60,27 @@ public class AuthenticationController {
         }
     }
 
-
+    //Added
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public LinkedHashMap<String, Long> viewAllTest(){
+    public LinkedHashMap<String, Long> viewAll(){
         LinkedHashMap<String, Long> allUsers = new LinkedHashMap<>();
-
         for(User user : userDao.findAll()){
             allUsers.put(user.getUsername(), user.getId());
         }
-
         return allUsers;
     }
 
+    //Added
     @RequestMapping(value = "/users/{accountId}", method = RequestMethod.GET)
-    public User getUser(@PathVariable long accountId){
+    public User getUser(@PathVariable long accountId, Principal principal){
         User user = new User();
-
-        user = userDao.findByAccountId(accountId);
-
+        //String currentUsername = principal.getName();
+        //String requestedInformationUsername = userDao.findByAccountId(accountId).getUsername();
+        //if(requestedInformationUsername.equals(currentUsername)){
+            user = userDao.findByAccountId(accountId);
+        //}else{
+        //    throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User is not authorized to access information for account ID " + accountId);
+        //}
         return user;
     }
 

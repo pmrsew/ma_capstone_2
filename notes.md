@@ -63,5 +63,18 @@ Start filling in skeletons and App.java methods, can be systematic or random.
 -receiver's account balance is increased
 -sender's account balance is decreased
 
+# *Presentation Notes*
 
+## Users in system
 
+- vantastic | dnd4lyfe
+- paigeagainstthemachine | thembo
+
+### What was added to existing code
+
+- /dao/UserDao.java and /dao/JdbcUserDao.java
+  - `findIdByUsername(String username)`
+- /controller/AuthenticationController.java
+  - `viewAll()`
+  - `getUser(long accountId, Principal principal)`
+    - User identity check

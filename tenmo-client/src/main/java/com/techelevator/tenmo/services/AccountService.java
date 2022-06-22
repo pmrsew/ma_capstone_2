@@ -29,7 +29,6 @@ public class AccountService {
     }
 
     public BigDecimal getBalance(){
-
         BigDecimal balance = new BigDecimal(0);
         balance = restTemplate.exchange(BASEURL + "accounts/" + currentUser.getUser().getId() + "/balance/",
                 HttpMethod.GET,
@@ -37,28 +36,23 @@ public class AccountService {
                 BigDecimal.class).getBody();
         return balance;
     }
-    public Account getAccount(){
 
+    public Account getAccount(){
         Account account = restTemplate.exchange(BASEURL + "accounts/" + currentUser.getUser().getId() , HttpMethod.GET, authHeader(), Account.class).getBody();
         return account;
     }
+
     public Account getAccount(User user){
         Account account = restTemplate.exchange(BASEURL + "accounts/" + user.getUser().getId() , HttpMethod.GET, authHeader(), Account.class).getBody();
         return account;
     }
 
-
     public Account updateAccount(Account account, BigDecimal amount){
-
         BigDecimal  balance = account.getBalance().add(amount);
         account.setBalance(balance);
         restTemplate.exchange(BASEURL + "accounts/" + account.getUserId(), HttpMethod.PUT, authHeader(account), Void.class);
-
-
         return account;
-
     }
-
 
 
 

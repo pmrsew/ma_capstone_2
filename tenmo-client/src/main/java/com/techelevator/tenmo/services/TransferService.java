@@ -3,11 +3,11 @@ package com.techelevator.tenmo.services;
 import com.techelevator.tenmo.model.Account;
 import com.techelevator.tenmo.model.AuthenticatedUser;
 import com.techelevator.tenmo.model.Transfer;
+import com.techelevator.util.BasicLogger;
 import io.cucumber.java.bs.A;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
+import org.springframework.http.*;
+import org.springframework.web.client.ResourceAccessException;
+import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
@@ -50,9 +50,7 @@ public class TransferService {
 
     public Transfer getTransferById(int id) {
         return restTemplate.exchange(BASEURL + "/" + id , HttpMethod.GET, authHeader(), Transfer.class).getBody();
-
     }
-
 
     public String transferDetails(Transfer transfer, AuthenticationService authenticationService){
             StringBuilder sb = new StringBuilder("");
@@ -67,20 +65,20 @@ public class TransferService {
             sb.append(String.format("Amount: %.2f\n", transfer.getAmount()));
 
             return sb.toString();
-
     }
 
 
-    private HttpEntity authHeader(Transfer transfer){
 
+
+    private HttpEntity authHeader(Transfer transfer){
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(currentUser.getToken());
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity entity = new HttpEntity(transfer, headers);
         return entity;
     }
-    private HttpEntity<?> authHeader(){
 
+    private HttpEntity<?> authHeader(){
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(currentUser.getToken());
         HttpEntity entity = new HttpEntity(headers);
